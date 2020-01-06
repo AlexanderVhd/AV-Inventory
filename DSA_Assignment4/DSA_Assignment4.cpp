@@ -5,6 +5,15 @@
 #include "HashMap.h"
 #include <cctype>
 
+void displayError() {
+
+	//repair the stream and clear the buffer (set the maximum number of characters to ignore)
+	cin.clear();
+	cin.ignore(std::numeric_limits<int>::max(), '\n');
+
+	//display error message
+	cout << "\nError: Please Enter Valid Input\n" << endl;
+}
 
 int main()
 {
@@ -14,12 +23,14 @@ int main()
 	bool condition;
 	HashMap inventory;
 
-	cout << "--------------------" << endl;
-	cout << "Welcome to Inventory" << endl;
-	cout << "--------------------" << endl;
+	cout << "====================" << endl;
+	cout << "  Inventory System  " << endl;
+	cout << "====================" << endl;
 
-	do
-	{
+	//exit option
+	bool exit = false;
+	
+	while (!exit) {
 		cout << endl;
 		cout << "(1) Insert Product" << endl;
 		cout << "(2) Search for Product" << endl;
@@ -28,6 +39,12 @@ int main()
 		cout << "(5) Quit" << endl;
 		cout << "\nEnter your choice : " << endl;
 		cin >> option;
+
+		//validate if user entered integer
+		if (cin.fail()) {
+			displayError();
+			continue;
+		}
 
 		switch (option)
 		{
@@ -46,11 +63,9 @@ int main()
 
 					//change the condition to false and clear the error flags in cin
 					condition = true;
-					cin.clear();
-					cin.ignore();
 
 					//display error message and start loop from beginning
-					cout << "    Invalid Input, Try again\n" << endl;
+					displayError();
 					continue;
 				}
 				else {
@@ -72,10 +87,9 @@ int main()
 					
 					//change the condition to false and clear the error flags in cin
 					condition = true;
-					cin.clear();
-					cin.ignore();
 
-					cout << "    Invalid Input, Try again\n" << endl;
+					//display error message and start loop from beginning
+					displayError();
 					continue;
 				}
 				else {
@@ -130,7 +144,7 @@ int main()
 					condition = false;
 				}
 				else if (searchType == 2) {
-					cout << "    Select the category\n\n";
+					cout << "    Select the category\n\n"; 
 					cout << "      (1) Raw Materials\n";
 					cout << "      (2) Work In Progress\n";
 					cout << "      (3) Finished Goods\n";
@@ -139,7 +153,7 @@ int main()
 
 					//check user input, set condition to true and loop back if user input is invalid
 					if (userCategory < 1 || userCategory > 4) {
-						cout << "    Invalid Input, Try again\n" << endl;
+						displayError();
 						condition = true;
 					}
 					else {
@@ -162,7 +176,7 @@ int main()
 				}
 				else {
 					//display error message and start loop from beginning
-					cout << "    Invalid option" << endl;
+					displayError();
 					condition = true;
 				}
 			} while (condition);
@@ -222,8 +236,8 @@ int main()
 					cout << " --------------------------------------------------------" << endl;
 				}
 				else {
+					displayError();
 					condition = true;
-					cout << "  Invalid Input: Try again" << endl;
 				}
 			} while (condition);
 			
@@ -246,7 +260,8 @@ int main()
 				//check user input, set condition to true and loop back if user input is invalid
 				if (productId <= 100) {
 					condition = true;
-					cout << "    Invalid Input, Try again\n" << endl;
+
+					displayError();
 					continue;
 				}
 				else {
@@ -261,13 +276,19 @@ int main()
 			cout << " --------------------------------------------------------" << endl;
 
 		case 5:
+			exit = true;
+
+			cout << "=====================" << endl;
+			cout << "  Exiting Inventory  " << endl;
+			cout << "=====================" << endl;
+
 			break;
 
 		default:
 			cout << "Invalid choice\n";
 		}
 
-	} while (option != 5);
+	}
 
 	return 0;
 

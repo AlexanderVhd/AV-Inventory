@@ -82,7 +82,7 @@ void HashMap::insertItem(int key, string category, string productName, double pr
 		//to save memory we create new item by replacing item (we dont need to create new Item)
 		item = new Item(key, category, productName, price);
 
-		//executes if we have empty linked list
+		//executes if we have empty linked lists
 		if (prev == NULL)
 		{
 			//insert item in empty linked list
